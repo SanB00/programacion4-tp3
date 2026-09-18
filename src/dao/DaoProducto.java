@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -37,6 +38,28 @@ public class DaoProducto {
 		}
 		return filas;
 	}
+	
+	
+	public boolean ejecutar_sp_AgregarProducto(Producto producto) {
+		Connection cn = null;
+		boolean resultado = false;
+		try {
+			cn = DriverManager.getConnection(host + dbname,user, pass);
+			CallableStatement cst = cn.prepareCall("CALL sp_AgregarProducto(?,?,?,?,?)");
+			cst.setString(1,producto.getCodigo());
+			cst.setString(2,producto.getNombre());
+			cst.setDouble(3,producto.getPrecio());
+			cst.setInt(4,producto.getStock());
+			cst.setInt(5,producto.getIdCategoria());
+			cst.execute();
+			resultado = true;
+					
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return resultado;
+	}
+	
 	public Producto getProducto(String Codigo) {
 		String query="select * from productos where codigo=?";
 		Connection cn=null;
