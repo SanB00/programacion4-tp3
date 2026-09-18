@@ -14,7 +14,11 @@ public class Categoria {
 			this.Nombre = Nombre;
 		}
 		
-	    // Getters y Setters
+	    public void setIdCategoria(int idCategoria) {
+			IdCategoria = idCategoria;
+		}
+
+		// Getters y Setters
 		public int getIdCategoria() {
 			return IdCategoria;
 		}
